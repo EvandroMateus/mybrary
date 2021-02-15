@@ -41,8 +41,7 @@ router.post('/', async (req, res) => {
     try{
         const newBook = await book.save()
         res.redirect(`books/${newBook.id}`)
-    }catch(err){
-        console.log(err)
+    }catch{
         renderNewPage(res, book, true)
     }
 })
@@ -79,8 +78,7 @@ router.put('/:id', async (req, res) => {
         }
         await book.save()
         res.redirect(`/books/${book.id}`)
-    }catch(err){
-        console.log(err)
+    }catch{
         if(book != null){
             renderEditPage(res, book, true)
         }else{
@@ -91,7 +89,7 @@ router.put('/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-    let books
+    let book
     try{
         book = await Book.findById(req.params.id)
         await book.remove()
@@ -128,8 +126,7 @@ async function renderFormPage(res, book, form, hasError = false){
             }
         }
         res.render(`books/${form}`, params)
-    }catch(err){
-        console.log(err)
+    }catch{
         res.redirect('/books')
     }
 }
